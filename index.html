@@ -3,10 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>works</title>
+  <title>テスト</title>
   <style>
-    /* フォント */
-    :root { color-scheme: light; }
     html, body {
       height: 100%;
       margin: 0;
@@ -14,12 +12,12 @@
                    "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic",
                    "Meiryo", sans-serif;
     }
-    
+
     body {
-      background: linear-gradient(to right, #ffffff, #dcdcdc);
+      background: linear-gradient(to right, #f2f2f2, #dcdcdc);
       display: grid;
       place-items: center;
-      text-rendering: optimizeLegibility;
+      text-align: center;
     }
 
     .title {
@@ -27,10 +25,29 @@
       letter-spacing: 0.06em;
       color: #222;
       user-select: none;
+      margin-bottom: 20px;
+    }
+
+    .link {
+      font-size: 20px;
+      color: #333;
+      text-decoration: none;
+      background: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background 0.2s ease;
+    }
+
+    .link:hover {
+      background: #eaeaea;
     }
   </style>
 </head>
 <body>
-  <div class="title">テスト</div>
+  <div>
+    <div class="title">テスト</div>
+    <a class="link" href="work001.html">001</a>
+  </div>
 </body>
 </html>
