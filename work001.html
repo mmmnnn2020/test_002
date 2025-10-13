@@ -8,31 +8,144 @@
     html, body {
       height: 100%;
       margin: 0;
-      display: grid;
-      place-items: center;
       background: linear-gradient(to right, #f2f2f2, #dcdcdc);
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP",
-                   "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic",
-                   "Meiryo", sans-serif;
-    }
-    .title {
-      font-size: clamp(20px, 5vw, 48px);
-      margin-bottom: 20px;
+                   "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", Meiryo, sans-serif;
       color: #222;
     }
+    .wrap {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      place-items: center;
+      gap: 12px;
+      padding: 20px;
+    }
+    h1 { margin: 0; font-size: clamp(20px, 5vw, 40px); user-select: none; }
+    .viewer {
+      width: min(100%, 1200px);
+      height: min(72vh, 80vw);
+      background: #fff;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 18px rgba(0,0,0,.12);
+      position: relative;
+      overflow: hidden;
+    }
     img {
-      max-width: 80%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+    button {
+      appearance: none;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,.12);
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform .05s ease, background .2s ease;
+    }
+    button:hover { background: #eee; }
+    button:active { transform: translateY(1px); }
+    .meta { font-size: 14px; color: #555; user-select: none; }
+    .hit-prev, .hit-next {
+      position: absolute; top: 0; bottom: 0; width: 40%;
+      cursor: pointer;
+    }
+    .hit-prev { left: 0; }
+    .hit-next { right: 0; }
+    /* 小さめ画面では広いクリック領域が便利 */
+    @media (min-width: 860px) {
+      .hit-prev, .hit-next { width: 30%; }
     }
   </style>
 </head>
 <body>
-  <div>
-    <div class="title">work001</div>
-    <!-- 同じ階層のフォルダ「work001」にある画像を参照 -->
-    <img src="work001/test001.png" alt="テスト画像">
+  <div class="wrap">
+    <h1>work001</h1>
+
+    <div class="viewer" id="viewer">
+      <!-- 画像本体 -->
+      <img id="pic" src="" alt="work001 image">
+      <!-- クリックで前後に進める広いヒット領域（左右） -->
+      <div class="hit-prev" aria-hidden="true"></div>
+      <div class="hit-next" aria-hidden="true"></div>
+    </div>
+
+    <div class="nav">
+      <button id="prevBtn" type="button">◀︎ prev</button>
+      <div class="meta" id="meta">0 / 0</div>
+      <button id="nextBtn" type="button">next ▶︎</button>
+    </div>
   </div>
+
+  <script>
+    // ここに work001/ フォルダ内の画像ファイル名を並べます
+    // 例: test001.png, test002.png, test003.jpg … のように追記
+    const images = [
+      "test001.png",
+      // "test002.png",
+      // "test003.jpg",
+    ].map(name => `work001/${name}`); // パスを付与
+
+    // URLハッシュ #3 みたいに指定したら、その番号から開始（1始まり）
+    const startFromHash = () => {
+      const n = parseInt(location.hash.replace("#", ""), 10);
+      return Number.isFinite(n) && n >= 1 && n <= images.length ? (n - 1) : 0;
+    };
+
+    const pic = document.getElementById("pic");
+    const meta = document.getElementById("meta");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const viewer = document.getElementById("viewer");
+
+    let idx = startFromHash();
+
+    function show(i) {
+      if (!images.length) return;
+      idx = (i + images.length) % images.length;     // ラップアラウンド
+      pic.src = images[idx];
+      meta.textContent = `${idx + 1} / ${images.length}`;
+      // ハッシュ更新（共有しやすい）:
+      history.replaceState(null, "", `#${idx + 1}`);
+      // 近傍のプリロード（体感を軽く）
+      preloadNeighbor(idx - 1);
+      preloadNeighbor(idx + 1);
+    }
+
+    function preloadNeighbor(i) {
+      const j = (i + images.length) % images.length;
+      const img = new Image();
+      img.src = images[j];
+    }
+
+    prevBtn.addEventListener("click", () => show(idx - 1));
+    nextBtn.addEventListener("click", () => show(idx + 1));
+
+    // クリック領域（画像左右）でも前後へ
+    viewer.querySelector(".hit-prev").addEventListener("click", () => show(idx - 1));
+    viewer.querySelector(".hit-next").addEventListener("click", () => show(idx + 1));
+
+    // キーボード矢印でも操作
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") show(idx - 1);
+      if (e.key === "ArrowRight") show(idx + 1);
+    });
+
+    // 初期表示
+    show(idx);
+  </script>
 </body>
 </html>
