@@ -8,8 +8,10 @@
     html, body {
       margin: 0;
       background: linear-gradient(to right, #f2f2f2, #dcdcdc);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP",
-                   "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", Meiryo, sans-serif;
+      /* ゴシック体を優先 */
+      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+                   "Yu Gothic", "Yu Gothic UI", "Noto Sans JP",
+                   Meiryo, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       color: #222;
     }
     .wrap {
@@ -25,38 +27,46 @@
     .gallery {
       display: flex;
       flex-direction: column;
-      gap: 40px; /* 等間隔 */
+      gap: 80px; /* ← 間隔を2倍に */
       align-items: center;
     }
+
+    /* カード感をなくし、画像そのまま表示 */
     .item {
       width: 100%;
       max-width: 900px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,.12);
-      overflow: hidden;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
+      overflow: visible;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; /* キャプションを右寄せ配置しやすく */
     }
     .item img {
       display: block;
       width: 100%;
       height: auto;
       object-fit: contain;
-      background: #fff;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none; /* 画像の影も無し */
     }
+
+    /* 画像の “外” で右下に小さく（右寄せ） */
     .cap {
-      position: absolute;
-      right: 12px;
-      bottom: 12px;
+      position: static;          /* 絶対配置をやめる */
+      margin-top: 8px;           /* 画像との間隔 */
       font-size: 12px;
       line-height: 1.4;
-      color: #111;
-      background: rgba(255,255,255,.75);
-      padding: 6px 8px;
-      border-radius: 8px;
-      /* 空行をそのまま改行として表示 */
-      white-space: pre-line;
-      backdrop-filter: blur(2px);
+      color: #222;
+      text-align: right;         /* 右寄せ */
+      white-space: pre-line;     /* 空行をそのまま改行として表示 */
+      background: transparent;   /* 背景なし */
+      padding: 0;                /* 余白なし */
+      border-radius: 0;
+      backdrop-filter: none;
     }
   </style>
 </head>
@@ -77,22 +87,17 @@
         if (!res.ok) throw new Error('assets.json の取得に失敗しました');
         const data = await res.json();
 
-        // data は { key: { filename, work_title, material, size, ... } } の形を想定
+        // JSONの記述順そのまま
         const items = Object.values(data);
-
-        // 表示順：filename を昇順に（任意で変更可）
-        //items.sort((a, b) => (a.filename || '').localeCompare(b.filename || '', 'ja'));
 
         const container = document.getElementById('gallery');
 
         items.forEach((it) => {
-          // 空文字は空行として表示するため、3行固定で join する
           const line1 = it.work_title ?? '';
           const line2 = it.material ?? '';
           const line3 = it.size ?? '';
           const caption = [line1, line2, line3].join('\n');
 
-          // 要素生成
           const box = document.createElement('div');
           box.className = 'item';
 
@@ -104,10 +109,10 @@
 
           const cap = document.createElement('div');
           cap.className = 'cap';
-          cap.textContent = caption; // 空行をそのまま表示（white-space: pre-line）
+          cap.textContent = caption;
 
           box.appendChild(img);
-          box.appendChild(cap);
+          box.appendChild(cap);  // ← 画像の外・直下に置く
           container.appendChild(box);
         });
       } catch (err) {
