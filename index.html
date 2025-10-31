@@ -6,10 +6,9 @@
   <title>テスト</title>
   <style>
     :root{
-      --sidebar-w: 220px;      /* 参考画像くらいの細さ */
-      --sidebar-w-sm: 160px;   /* 画面が狭い時 */
+      --sidebar-w: 220px;
+      --sidebar-w-sm: 160px;
     }
-
     html, body {
       height: 100%;
       margin: 0;
@@ -19,123 +18,102 @@
       color: #222;
     }
 
-    /* レイアウト：左に固定メニュー、右にコンテンツ */
+    /* レイアウト：左メニュー／右コンテンツ */
     .layout {
       min-height: 100vh;
       display: grid;
       grid-template-columns: var(--sidebar-w) 1fr;
       background: linear-gradient(to right, #f2f2f2, #dcdcdc);
     }
-
     @media (max-width: 720px) {
       .layout { grid-template-columns: var(--sidebar-w-sm) 1fr; }
     }
 
-    /* 左サイド（常時表示） */
+    /* 左メニュー（より左寄せ・行間狭め） */
     .sidebar {
-      position: sticky; /* 右側が縦に長くなっても左は常に見える */
+      position: sticky;
       top: 0;
       align-self: start;
       height: 100vh;
-      padding: 28px 16px;
+      /* 左寄せ：左右の余白を小さく */
+      padding: 20px 10px;
       box-sizing: border-box;
       background: #fff;
-      border-right: 1px solid rgba(0,0,0,0.08);
+      /* 区切り線を削除（border-right なし） */
     }
-
-    .brand {
-      font-size: clamp(18px, 2.4vw, 22px);
-      letter-spacing: .06em;
-      margin: 0 0 18px;
-      user-select: none;
+    nav {
+      margin: 0;
     }
-
     nav a {
       display: block;
       text-decoration: none;
       color: #333;
-      padding: 8px 2px;
+      /* 行間を半分程度に（以前 ~1.6 → 1.1 へ） */
+      line-height: 1.1;
       font-size: 15px;
       letter-spacing: .02em;
+      /* 余白も詰める */
+      padding: 4px 2px;
       transition: opacity .15s ease;
     }
     nav a:hover { opacity: .7; }
     nav a.active { font-weight: 600; }
 
-    /* 右メイン */
+    /* 右側（枠や背景ボックスを廃止し、素の余白のみ） */
     .main {
       min-height: 100vh;
       padding: 40px clamp(20px, 6vw, 80px);
       box-sizing: border-box;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
+      display: block;
     }
 
-    /* 右側の中身用ラッパ（今は空だが余白だけ用意） */
-    .content {
-      width: min(980px, 100%);
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(2px);
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-      min-height: 40vh;
-      padding: clamp(16px, 3vw, 28px);
-    }
-
-    /* 右側に出す連絡先のスタイル（簡素に） */
+    /* Contact 表示用（改行反映のみ） */
     .contact {
-      line-height: 1.9;
-      white-space: pre-line; /* 改行をそのまま反映 */
+      white-space: pre-line;
       font-size: 16px;
+      line-height: 1.8;
     }
   </style>
 </head>
 <body>
   <div class="layout">
-    <!-- 左メニュー -->
+    <!-- 左メニュー：項目は3つのみ（同一書体・同一サイズ） -->
     <aside class="sidebar" aria-label="サイドメニュー">
-      <h1 class="brand">Yamada Taro</h1>
       <nav>
         <a href="#" id="menu-home" class="active">Yamada Taro</a>
-        <!-- 元のHTMLのリンク名が work001.html だったため一旦それに合わせています
-             （後でファイル名を変更する場合はここだけ差し替えてください） -->
         <a href="work001.html" id="menu-works">Works</a>
         <a href="#" id="menu-contact">Contact</a>
       </nav>
     </aside>
 
-    <!-- 右メイン -->
+    <!-- 右メイン：初期は空（将来テキストや画像を入れる前提） -->
     <main class="main" id="main">
-      <section class="content" id="content">
-        <!-- 初期状態：空（将来テキストや画像を入れる前提） -->
-      </section>
+      <div id="content"></div>
     </main>
   </div>
 
   <script>
-    // シンプルな表示切り替え
     const menuHome = document.getElementById('menu-home');
     const menuWorks = document.getElementById('menu-works');
     const menuContact = document.getElementById('menu-contact');
-    const content   = document.getElementById('content');
+    const content = document.getElementById('content');
 
     function setActive(el){
       document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
       el.classList.add('active');
     }
 
-    // 「Yamada Taro」＝空表示
+    // Home（Yamada Taro）：空
     menuHome.addEventListener('click', (e) => {
       e.preventDefault();
       setActive(menuHome);
-      content.innerHTML = ''; // 文章なし（プレースホルダだけ）
+      content.innerHTML = '';
     });
 
-    // Works はリンク遷移（JSは不要だが active 表示だけ合わせたい場合）
+    // Works：遷移。視覚的なactiveは押下時のみ合わせる
     menuWorks.addEventListener('mousedown', () => setActive(menuWorks));
 
-    // Contact は右側にテキスト表示
+    // Contact：右側にテキスト表示（メールとInstagram）
     menuContact.addEventListener('click', (e) => {
       e.preventDefault();
       setActive(menuContact);
