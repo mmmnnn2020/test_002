@@ -4,67 +4,33 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>work001</title>
-
   <style>
-    :root{
-      --sidebar-w: 220px;
-      --sidebar-w-sm: 160px;
-    }
-
     html, body {
       margin: 0;
+      background: #f5f4ef; /* 単色 */
       font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans",
                    "Yu Gothic", "Yu Gothic UI", "Noto Sans JP",
                    Meiryo, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       color: #222;
-      background: #f2f2f2; /* index と統一 */
     }
-
-    /* ページ全体レイアウト */
-    .layout {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: var(--sidebar-w) 1fr;
-    }
-    @media (max-width: 720px) {
-      .layout { grid-template-columns: var(--sidebar-w-sm) 1fr; }
-    }
-
-    /* 左メニュー */
-    .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 20px 10px;
-      box-sizing: border-box;
-    }
-    nav a {
-      display: block;
-      text-decoration: none;
-      color: #333;
-      line-height: 1.1;
-      font-size: 15px;
-      letter-spacing: .02em;
-      padding: 4px 2px;
-      transition: opacity .15s;
-    }
-    nav a:hover { opacity: .7; }
-    nav a.active { font-weight: 600; }
-
-    /* 右側 */
-    .main {
-      min-height: 100vh;
-      padding: 40px clamp(20px, 6vw, 80px);
-      box-sizing: border-box;
-    }
-
-    /* === ここから元の作品レイアウト === */
-
     .wrap {
       max-width: 1000px;
       margin: 0 auto;
-      padding-bottom: 80px;
+      padding: 40px 20px 80px;
     }
+
+    /* ← Back リンク（普通のテキストリンク。固定しない） */
+    .back {
+      display: inline-block;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      letter-spacing: .02em;
+      padding: 4px 2px;
+      transition: opacity .15s ease;
+      margin-bottom: 24px; /* ギャラリーとの間隔 */
+    }
+    .back:hover { opacity: .7; }
 
     .gallery {
       display: flex;
@@ -76,52 +42,46 @@
     .item {
       width: 100%;
       max-width: 900px;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
       overflow: visible;
+      position: relative;
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      align-items: flex-end; /* キャプション右寄せ */
     }
-
     .item img {
       display: block;
       width: 100%;
       height: auto;
       object-fit: contain;
       background: transparent;
+      border-radius: 0;
+      box-shadow: none;
     }
 
     .cap {
+      position: static;
       margin-top: 8px;
       font-size: 12px;
       line-height: 1.4;
-      white-space: pre-line;
-      text-align: right;
       color: #222;
+      text-align: right;
+      white-space: pre-line;
       background: transparent;
+      padding: 0;
+      border-radius: 0;
+      backdrop-filter: none;
     }
   </style>
 </head>
-
 <body>
-  <div class="layout">
+  <div class="wrap">
+    <!-- 見出しは廃止。代わりに Back を左上に配置 -->
+    <a class="back" href="index.html" aria-label="トップへ戻る">Back</a>
 
-    <!-- 左メニュー -->
-    <aside class="sidebar">
-      <nav>
-        <a href="index.html">Yamada Taro</a>
-        <a href="work001.html" class="active">Works</a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
-    </aside>
-
-    <!-- 右 -->
-    <main class="main">
-      <div class="wrap">
-        <!-- h1 は削除（不要） -->
-        <div id="gallery" class="gallery" aria-live="polite"></div>
-      </div>
-    </main>
-
+    <div id="gallery" class="gallery" aria-live="polite"></div>
   </div>
 
   <script>
@@ -135,6 +95,7 @@
         if (!res.ok) throw new Error('assets.json の取得に失敗しました');
         const data = await res.json();
 
+        // JSONの記述順そのまま
         const items = Object.values(data);
         const container = document.getElementById('gallery');
 
@@ -161,7 +122,6 @@
           box.appendChild(cap);
           container.appendChild(box);
         });
-
       } catch (err) {
         console.error(err);
         const container = document.getElementById('gallery');
@@ -169,6 +129,5 @@
       }
     })();
   </script>
-
 </body>
 </html>
