@@ -16,6 +16,8 @@
                    "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic",
                    "Meiryo", sans-serif;
       color: #222;
+      /* ← 全体背景色（単色） */
+      background: #f2f2f2;
     }
 
     /* レイアウト：左メニュー／右コンテンツ */
@@ -23,43 +25,36 @@
       min-height: 100vh;
       display: grid;
       grid-template-columns: var(--sidebar-w) 1fr;
-      background: linear-gradient(to right, #f2f2f2, #dcdcdc);
     }
     @media (max-width: 720px) {
       .layout { grid-template-columns: var(--sidebar-w-sm) 1fr; }
     }
 
-    /* 左メニュー（より左寄せ・行間狭め） */
+    /* 左メニュー：白い背景を廃止 → 全体と同じ背景 */
     .sidebar {
       position: sticky;
       top: 0;
       align-self: start;
       height: 100vh;
-      /* 左寄せ：左右の余白を小さく */
       padding: 20px 10px;
       box-sizing: border-box;
-      background: #fff;
-      /* 区切り線を削除（border-right なし） */
+      /* background: none; ← 明示しないことでbody背景に溶け込む */
     }
-    nav {
-      margin: 0;
-    }
+
     nav a {
       display: block;
       text-decoration: none;
       color: #333;
-      /* 行間を半分程度に（以前 ~1.6 → 1.1 へ） */
       line-height: 1.1;
       font-size: 15px;
       letter-spacing: .02em;
-      /* 余白も詰める */
       padding: 4px 2px;
       transition: opacity .15s ease;
     }
     nav a:hover { opacity: .7; }
     nav a.active { font-weight: 600; }
 
-    /* 右側（枠や背景ボックスを廃止し、素の余白のみ） */
+    /* 右側：背景の白ボックス撤去 */
     .main {
       min-height: 100vh;
       padding: 40px clamp(20px, 6vw, 80px);
@@ -67,7 +62,6 @@
       display: block;
     }
 
-    /* Contact 表示用（改行反映のみ） */
     .contact {
       white-space: pre-line;
       font-size: 16px;
@@ -77,7 +71,7 @@
 </head>
 <body>
   <div class="layout">
-    <!-- 左メニュー：項目は3つのみ（同一書体・同一サイズ） -->
+    <!-- 左メニュー -->
     <aside class="sidebar" aria-label="サイドメニュー">
       <nav>
         <a href="#" id="menu-home" class="active">Yamada Taro</a>
@@ -86,7 +80,7 @@
       </nav>
     </aside>
 
-    <!-- 右メイン：初期は空（将来テキストや画像を入れる前提） -->
+    <!-- 右コンテンツ -->
     <main class="main" id="main">
       <div id="content"></div>
     </main>
@@ -103,24 +97,23 @@
       el.classList.add('active');
     }
 
-    // Home（Yamada Taro）：空
     menuHome.addEventListener('click', (e) => {
       e.preventDefault();
       setActive(menuHome);
-      content.innerHTML = '';
+      content.textContent = '';
     });
 
-    // Works：遷移。視覚的なactiveは押下時のみ合わせる
     menuWorks.addEventListener('mousedown', () => setActive(menuWorks));
 
-    // Contact：右側にテキスト表示（メールとInstagram）
     menuContact.addEventListener('click', (e) => {
       e.preventDefault();
       setActive(menuContact);
       content.innerHTML = `
         <div class="contact">
           contact@example.com
-          \ninstagram: example_account
+
+          instagram:
+          example_account
         </div>
       `;
     });
