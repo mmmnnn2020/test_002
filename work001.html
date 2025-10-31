@@ -7,31 +7,49 @@
   <style>
     html, body {
       margin: 0;
-      background: #f5f4ef; /* 単色 */
+      background: #f5f4ef;
       font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans",
                    "Yu Gothic", "Yu Gothic UI", "Noto Sans JP",
                    Meiryo, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       color: #222;
     }
+
     .wrap {
       max-width: 1000px;
       margin: 0 auto;
       padding: 40px 20px 80px;
     }
 
-    /* ← Back リンク（普通のテキストリンク。固定しない） */
+    /* ---- 上部行（Back + Works） ---- */
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    /* Back リンク */
     .back {
-      display: inline-block;
       text-decoration: none;
       color: #333;
       font-size: 14px;
       letter-spacing: .02em;
       padding: 4px 2px;
       transition: opacity .15s ease;
-      margin-bottom: 24px; /* ギャラリーとの間隔 */
+      position: absolute;
+      left: 0;
     }
     .back:hover { opacity: .7; }
 
+    /* 中央 Works（リンクではない） */
+    .title {
+      font-size: 14px;
+      letter-spacing: .02em;
+      user-select: none;
+    }
+
+    /* ---- ギャラリー ---- */
     .gallery {
       display: flex;
       flex-direction: column;
@@ -46,11 +64,11 @@
       border-radius: 0;
       box-shadow: none;
       overflow: visible;
-      position: relative;
       display: flex;
       flex-direction: column;
       align-items: flex-end; /* キャプション右寄せ */
     }
+
     .item img {
       display: block;
       width: 100%;
@@ -62,7 +80,6 @@
     }
 
     .cap {
-      position: static;
       margin-top: 8px;
       font-size: 12px;
       line-height: 1.4;
@@ -72,20 +89,22 @@
       background: transparent;
       padding: 0;
       border-radius: 0;
-      backdrop-filter: none;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- 見出しは廃止。代わりに Back を左上に配置 -->
-    <a class="back" href="index.html" aria-label="トップへ戻る">Back</a>
+
+    <!-- Back と Works を並べる行 -->
+    <div class="topline">
+      <a class="back" href="index.html">Back</a>
+      <div class="title">Works</div>
+    </div>
 
     <div id="gallery" class="gallery" aria-live="polite"></div>
   </div>
 
   <script>
-    // 画像とJSONの置き場所（同じ work001/ フォルダ）
     const DATA_URL = 'work001/assets.json';
     const IMG_BASE = 'work001/';
 
@@ -95,15 +114,11 @@
         if (!res.ok) throw new Error('assets.json の取得に失敗しました');
         const data = await res.json();
 
-        // JSONの記述順そのまま
         const items = Object.values(data);
         const container = document.getElementById('gallery');
 
         items.forEach((it) => {
-          const line1 = it.work_title ?? '';
-          const line2 = it.material ?? '';
-          const line3 = it.size ?? '';
-          const caption = [line1, line2, line3].join('\n');
+          const caption = [it.work_title ?? '', it.material ?? '', it.size ?? ''].join('\n');
 
           const box = document.createElement('div');
           box.className = 'item';
