@@ -16,11 +16,9 @@
                    "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic",
                    "Meiryo", sans-serif;
       color: #222;
-      /* ← 全体背景色（単色） */
-      background: #f2f2f2;
+      background: #f5f4ef;
     }
 
-    /* レイアウト：左メニュー／右コンテンツ */
     .layout {
       min-height: 100vh;
       display: grid;
@@ -30,7 +28,6 @@
       .layout { grid-template-columns: var(--sidebar-w-sm) 1fr; }
     }
 
-    /* 左メニュー：白い背景を廃止 → 全体と同じ背景 */
     .sidebar {
       position: sticky;
       top: 0;
@@ -38,7 +35,7 @@
       height: 100vh;
       padding: 20px 10px;
       box-sizing: border-box;
-      /* background: none; ← 明示しないことでbody背景に溶け込む */
+      /* background: none; */
     }
 
     nav a {
@@ -54,7 +51,6 @@
     nav a:hover { opacity: .7; }
     nav a.active { font-weight: 600; }
 
-    /* 右側：背景の白ボックス撤去 */
     .main {
       min-height: 100vh;
       padding: 40px clamp(20px, 6vw, 80px);
