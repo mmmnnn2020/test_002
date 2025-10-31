@@ -4,76 +4,124 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>work001</title>
+
   <style>
+    :root{
+      --sidebar-w: 220px;
+      --sidebar-w-sm: 160px;
+    }
+
     html, body {
       margin: 0;
-      background: linear-gradient(to right, #f5f4ef, #f5f4ef);
-      /* ゴシック体を優先 */
       font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans",
                    "Yu Gothic", "Yu Gothic UI", "Noto Sans JP",
                    Meiryo, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       color: #222;
+      background: #f2f2f2; /* index と統一 */
     }
+
+    /* ページ全体レイアウト */
+    .layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+    }
+    @media (max-width: 720px) {
+      .layout { grid-template-columns: var(--sidebar-w-sm) 1fr; }
+    }
+
+    /* 左メニュー */
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 20px 10px;
+      box-sizing: border-box;
+    }
+    nav a {
+      display: block;
+      text-decoration: none;
+      color: #333;
+      line-height: 1.1;
+      font-size: 15px;
+      letter-spacing: .02em;
+      padding: 4px 2px;
+      transition: opacity .15s;
+    }
+    nav a:hover { opacity: .7; }
+    nav a.active { font-weight: 600; }
+
+    /* 右側 */
+    .main {
+      min-height: 100vh;
+      padding: 40px clamp(20px, 6vw, 80px);
+      box-sizing: border-box;
+    }
+
+    /* === ここから元の作品レイアウト === */
+
     .wrap {
       max-width: 1000px;
       margin: 0 auto;
-      padding: 40px 20px 80px;
+      padding-bottom: 80px;
     }
-    h1 {
-      text-align: center;
-      font-size: clamp(20px, 5vw, 40px);
-      margin: 0 0 40px;
-    }
+
     .gallery {
       display: flex;
       flex-direction: column;
-      gap: 80px; /* ← 間隔を2倍に */
+      gap: 80px;
       align-items: center;
     }
 
-    /* カード感をなくし、画像そのまま表示 */
     .item {
       width: 100%;
       max-width: 900px;
-      background: transparent;
-      border-radius: 0;
-      box-shadow: none;
       overflow: visible;
-      position: relative;
       display: flex;
       flex-direction: column;
-      align-items: flex-end; /* キャプションを右寄せ配置しやすく */
+      align-items: flex-end;
     }
+
     .item img {
       display: block;
       width: 100%;
       height: auto;
       object-fit: contain;
       background: transparent;
-      border-radius: 0;
-      box-shadow: none; /* 画像の影も無し */
     }
 
-    /* 画像の “外” で右下に小さく（右寄せ） */
     .cap {
-      position: static;          /* 絶対配置をやめる */
-      margin-top: 8px;           /* 画像との間隔 */
+      margin-top: 8px;
       font-size: 12px;
       line-height: 1.4;
+      white-space: pre-line;
+      text-align: right;
       color: #222;
-      text-align: right;         /* 右寄せ */
-      white-space: pre-line;     /* 空行をそのまま改行として表示 */
-      background: transparent;   /* 背景なし */
-      padding: 0;                /* 余白なし */
-      border-radius: 0;
-      backdrop-filter: none;
+      background: transparent;
     }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>works</h1>
-    <div id="gallery" class="gallery" aria-live="polite"></div>
+  <div class="layout">
+
+    <!-- 左メニュー -->
+    <aside class="sidebar">
+      <nav>
+        <a href="index.html">Yamada Taro</a>
+        <a href="work001.html" class="active">Works</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </aside>
+
+    <!-- 右 -->
+    <main class="main">
+      <div class="wrap">
+        <!-- h1 は削除（不要） -->
+        <div id="gallery" class="gallery" aria-live="polite"></div>
+      </div>
+    </main>
+
   </div>
 
   <script>
@@ -87,9 +135,7 @@
         if (!res.ok) throw new Error('assets.json の取得に失敗しました');
         const data = await res.json();
 
-        // JSONの記述順そのまま
         const items = Object.values(data);
-
         const container = document.getElementById('gallery');
 
         items.forEach((it) => {
@@ -112,9 +158,10 @@
           cap.textContent = caption;
 
           box.appendChild(img);
-          box.appendChild(cap);  // ← 画像の外・直下に置く
+          box.appendChild(cap);
           container.appendChild(box);
         });
+
       } catch (err) {
         console.error(err);
         const container = document.getElementById('gallery');
@@ -122,5 +169,6 @@
       }
     })();
   </script>
+
 </body>
 </html>
