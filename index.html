@@ -5,49 +5,147 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>テスト</title>
   <style>
+    :root{
+      --sidebar-w: 220px;      /* 参考画像くらいの細さ */
+      --sidebar-w-sm: 160px;   /* 画面が狭い時 */
+    }
+
     html, body {
       height: 100%;
       margin: 0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP",
                    "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic",
                    "Meiryo", sans-serif;
-    }
-
-    body {
-      background: linear-gradient(to right, #f2f2f2, #dcdcdc);
-      display: grid;
-      place-items: center;
-      text-align: center;
-    }
-
-    .title {
-      font-size: clamp(28px, 6vw, 64px);
-      letter-spacing: 0.06em;
       color: #222;
-      user-select: none;
-      margin-bottom: 20px;
     }
 
-    .link {
-      font-size: 20px;
-      color: #333;
-      text-decoration: none;
+    /* レイアウト：左に固定メニュー、右にコンテンツ */
+    .layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      background: linear-gradient(to right, #f2f2f2, #dcdcdc);
+    }
+
+    @media (max-width: 720px) {
+      .layout { grid-template-columns: var(--sidebar-w-sm) 1fr; }
+    }
+
+    /* 左サイド（常時表示） */
+    .sidebar {
+      position: sticky; /* 右側が縦に長くなっても左は常に見える */
+      top: 0;
+      align-self: start;
+      height: 100vh;
+      padding: 28px 16px;
+      box-sizing: border-box;
       background: #fff;
-      padding: 8px 16px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      transition: background 0.2s ease;
+      border-right: 1px solid rgba(0,0,0,0.08);
     }
 
-    .link:hover {
-      background: #eaeaea;
+    .brand {
+      font-size: clamp(18px, 2.4vw, 22px);
+      letter-spacing: .06em;
+      margin: 0 0 18px;
+      user-select: none;
+    }
+
+    nav a {
+      display: block;
+      text-decoration: none;
+      color: #333;
+      padding: 8px 2px;
+      font-size: 15px;
+      letter-spacing: .02em;
+      transition: opacity .15s ease;
+    }
+    nav a:hover { opacity: .7; }
+    nav a.active { font-weight: 600; }
+
+    /* 右メイン */
+    .main {
+      min-height: 100vh;
+      padding: 40px clamp(20px, 6vw, 80px);
+      box-sizing: border-box;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    /* 右側の中身用ラッパ（今は空だが余白だけ用意） */
+    .content {
+      width: min(980px, 100%);
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(2px);
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      min-height: 40vh;
+      padding: clamp(16px, 3vw, 28px);
+    }
+
+    /* 右側に出す連絡先のスタイル（簡素に） */
+    .contact {
+      line-height: 1.9;
+      white-space: pre-line; /* 改行をそのまま反映 */
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <div>
-    <div class="title">テスト</div>
-    <a class="link" href="work001.html">001</a>
+  <div class="layout">
+    <!-- 左メニュー -->
+    <aside class="sidebar" aria-label="サイドメニュー">
+      <h1 class="brand">Yamada Taro</h1>
+      <nav>
+        <a href="#" id="menu-home" class="active">Yamada Taro</a>
+        <!-- 元のHTMLのリンク名が work001.html だったため一旦それに合わせています
+             （後でファイル名を変更する場合はここだけ差し替えてください） -->
+        <a href="work001.html" id="menu-works">Works</a>
+        <a href="#" id="menu-contact">Contact</a>
+      </nav>
+    </aside>
+
+    <!-- 右メイン -->
+    <main class="main" id="main">
+      <section class="content" id="content">
+        <!-- 初期状態：空（将来テキストや画像を入れる前提） -->
+      </section>
+    </main>
   </div>
+
+  <script>
+    // シンプルな表示切り替え
+    const menuHome = document.getElementById('menu-home');
+    const menuWorks = document.getElementById('menu-works');
+    const menuContact = document.getElementById('menu-contact');
+    const content   = document.getElementById('content');
+
+    function setActive(el){
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // 「Yamada Taro」＝空表示
+    menuHome.addEventListener('click', (e) => {
+      e.preventDefault();
+      setActive(menuHome);
+      content.innerHTML = ''; // 文章なし（プレースホルダだけ）
+    });
+
+    // Works はリンク遷移（JSは不要だが active 表示だけ合わせたい場合）
+    menuWorks.addEventListener('mousedown', () => setActive(menuWorks));
+
+    // Contact は右側にテキスト表示
+    menuContact.addEventListener('click', (e) => {
+      e.preventDefault();
+      setActive(menuContact);
+      content.innerHTML = `
+        <div class="contact">
+          contact@example.com
+          \ninstagram: example_account
+        </div>
+      `;
+    });
+  </script>
 </body>
 </html>
