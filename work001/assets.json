@@ -1,30 +1,282 @@
 {
-  "test001.png": {
+  "001.jpg": {
     "image": "",
-    "filename": "test001.png",
-    "work_title": "orange light",
-    "material": "collage",
-    "size": ""
+    "filename": "001.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
   },
-  "test_002.png": {
+  "002.jpg": {
     "image": "",
-    "filename": "test_002.png",
-    "work_title": "Othello",
-    "material": "collage",
-    "size": "H200 W200"
+    "filename": "002.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
   },
-  "test_003.png": {
+  "003.jpg": {
     "image": "",
-    "filename": "test_003.png",
-    "work_title": "morning",
-    "material": "collage",
-    "size": "H200 W200"
+    "filename": "003.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
   },
-  "test_004.png": {
+  "004.jpg": {
     "image": "",
-    "filename": "test_004.png",
-    "work_title": "sun shade",
-    "material": "collage ",
-    "size": "H200 W200"
+    "filename": "004.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "005.jpg": {
+    "image": "",
+    "filename": "005.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "006.jpg": {
+    "image": "",
+    "filename": "006.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "007.jpg": {
+    "image": "",
+    "filename": "007.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "008.jpg": {
+    "image": "",
+    "filename": "008.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "009.jpg": {
+    "image": "",
+    "filename": "009.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "010.jpg": {
+    "image": "",
+    "filename": "010.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "011.jpg": {
+    "image": "",
+    "filename": "011.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "012.jpg": {
+    "image": "",
+    "filename": "012.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "013.jpg": {
+    "image": "",
+    "filename": "013.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H148 W100mm"
+  },
+  "014.jpg": {
+    "image": "",
+    "filename": "014.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "015.jpg": {
+    "image": "",
+    "filename": "015.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "016.jpg": {
+    "image": "",
+    "filename": "016.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "017.jpg": {
+    "image": "",
+    "filename": "017.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "018.jpg": {
+    "image": "",
+    "filename": "018.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "019.jpg": {
+    "image": "",
+    "filename": "019.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "020.jpg": {
+    "image": "",
+    "filename": "020.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "021.jpg": {
+    "image": "",
+    "filename": "021.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "022.jpg": {
+    "image": "",
+    "filename": "022.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "023.jpg": {
+    "image": "",
+    "filename": "023.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "024.jpg": {
+    "image": "",
+    "filename": "024.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "025.jpg": {
+    "image": "",
+    "filename": "025.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "026.jpg": {
+    "image": "",
+    "filename": "026.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "027.jpg": {
+    "image": "",
+    "filename": "027.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "028.jpg": {
+    "image": "",
+    "filename": "028.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "029.jpg": {
+    "image": "",
+    "filename": "029.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "030.jpg": {
+    "image": "",
+    "filename": "030.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "031.jpg": {
+    "image": "",
+    "filename": "031.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "032.jpg": {
+    "image": "",
+    "filename": "032.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "033.jpg": {
+    "image": "",
+    "filename": "033.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "034.jpg": {
+    "image": "",
+    "filename": "034.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "035.jpg": {
+    "image": "",
+    "filename": "035.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "036.jpg": {
+    "image": "",
+    "filename": "036.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "037.jpg": {
+    "image": "",
+    "filename": "037.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "038.jpg": {
+    "image": "",
+    "filename": "038.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "039.jpg": {
+    "image": "",
+    "filename": "039.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
+  },
+  "040.jpg": {
+    "image": "",
+    "filename": "040.jpg",
+    "work_title": "",
+    "material": "watercolor paper",
+    "size": "H100 W148mm"
   }
 }
